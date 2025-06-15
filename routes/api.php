@@ -1,7 +1,16 @@
 <?php
 
+use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\EntidadComercialController;
+use App\Http\Controllers\NotaController;
+use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,13 +48,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/auth/logout", [AuthController::class, "funLogout"])->middleware('auth:sanctum');
 });
 
-// crud usuario 
 
-Route::get("/users", [UsuarioController::class, "funListar"]);
-Route::post("/users", [UsuarioController::class, "funGuardar"]);
-Route::get("/users/{id}", [UsuarioController::class, "funMostrar"]);
-Route::put("/users/{id}", [UsuarioController::class, "funModificar"]);
-Route::delete("/users/{id}", [UsuarioController::class, "funEliminar"]);
+Route::middleware('auth:sanctum')->group(function () {
+    // crud usuario 
+    Route::get("/users", [UsuarioController::class, "funListar"]);
+    Route::post("/users", [UsuarioController::class, "funGuardar"]);
+    Route::get("/users/{id}", [UsuarioController::class, "funMostrar"]);
+    Route::put("/users/{id}", [UsuarioController::class, "funModificar"]);
+    Route::delete("/users/{id}", [UsuarioController::class, "funEliminar"]);
 
-// crud roles 
-Route::apiResource("/role", RoleController::class);
+    // crud roles 
+    Route::apiResource("/role", RoleController::class);
+    Route::apiResource("/almacen", AlmacenController::class);
+    Route::apiResource("/categoria", CategoriaController::class);
+    Route::apiResource("/contacto", ContactoController::class);
+    Route::apiResource("/entidad-comercial", EntidadComercialController::class);
+    Route::apiResource("/nota", NotaController::class);
+    Route::apiResource("/permiso", PermisoController::class);
+    Route::apiResource("/persona", PersonaController::class);
+    Route::apiResource("/producto", ProductoController::class);
+    Route::apiResource("/sucursal", SucursalController::class);
+});
