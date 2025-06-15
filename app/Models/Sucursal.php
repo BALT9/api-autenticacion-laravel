@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sucursal extends Model
 {
-    //
+    public function users(){
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function almacenes(){
+        // una sucursal tiene muchos almacenes 
+        return $this->hasMany(Almacen::class);
+    }
 }

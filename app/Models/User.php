@@ -46,4 +46,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function persona(){
+        // un usuario tiene una persona 
+        return $this -> hasOne(Persona::class);
+    }
+
+    public function roles(){ 
+        return $this -> belongsToMany(Role::class)->withTimestamps();
+    }
+
+    public function sucursales(){
+        // un rol pertenece a muchos usuarios 
+        return $this->belongsToMany(Sucursal::class)->withTimestamps();
+    }
+
+    public function notas(){
+        return $this->hasMany(Nota::class);
+    }
 }
