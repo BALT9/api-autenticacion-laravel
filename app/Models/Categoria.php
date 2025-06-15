@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Categoria extends Model
 {
     // tabla de categoria (opcional) 
+
+    
     // protected $table = "categorias";
     // protected $primaryKey = 'cod_cate';
     // public $incrementing = false;
