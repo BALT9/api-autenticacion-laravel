@@ -17,4 +17,11 @@ class Almacen extends Model
                     ->withTimestamps()
                     ->withPivot(['cantidad_actual','fecha_actualizacion']);
     }
+
+    //almacen tiene notas
+    public function notas(){
+        return $this->belongsToMany(Nota::class, "movimentos")
+                    ->withTimestamps()
+                    ->withPivot(["producto_id","cantidad","tipo_movimiento","precio_unitario_compra","precio_unitario_venta","total_linea","observaciones"]);
+    }
 }
