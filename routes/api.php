@@ -48,7 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/auth/logout", [AuthController::class, "funLogout"])->middleware('auth:sanctum');
 });
 
-
 Route::middleware('auth:sanctum')->group(function () {
     // crud usuario 
     Route::get("/users", [UsuarioController::class, "funListar"]);
@@ -69,3 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/producto", ProductoController::class);
     Route::apiResource("/sucursal", SucursalController::class);
 });
+
+Route::get("/no-autorizado", function(){
+    return response()->json(["message"=>"No Autorizado para ver el recurso"],401);
+})->name('login');

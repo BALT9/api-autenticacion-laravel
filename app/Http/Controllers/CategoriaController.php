@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -11,7 +12,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::get();
+        return response()->json($categorias,200);
     }
 
     /**
@@ -19,7 +21,16 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nombre"=>"required"
+        ]);
+
+        $cat = new Categoria();
+        $cat->nombre = $request->nombre;
+
+        $cat->save();
+
+        return response()->json($cat, 201);
     }
 
     /**
@@ -27,7 +38,9 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $categoria = Categoria::find($id);
+
+        return response()->json($categoria, 200);
     }
 
     /**
@@ -35,7 +48,16 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            "nombre"=>"required"
+        ]);
+
+        $cat = Categoria::find($id);
+        $cat->nombre = $request->nombre;
+
+        $cat->update();
+
+        return response()->json($cat, 201);
     }
 
     /**
