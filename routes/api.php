@@ -56,6 +56,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put("/users/{id}", [UsuarioController::class, "funModificar"]);
     Route::delete("/users/{id}", [UsuarioController::class, "funEliminar"]);
 
+    //registro de subida de imagenes
+    Route::post("producto/imagen", [ProductoController::class, "guardarProductoImagen"]);
+
     // crud roles 
     Route::apiResource("/role", RoleController::class);
     Route::apiResource("/almacen", AlmacenController::class);
