@@ -80,4 +80,12 @@ class UsuarioController extends Controller
 
         return response()->json(['mensaje' => 'Usuario eliminado'], 200);
     }
+
+    public function funActualizarRoles($id,Request $request){
+        $usuario = User::find($id);
+        // estoy usando el metodo roles() del modelo user
+        $usuario->roles()->sync($request["roles_id"]);
+
+        return response()->json(['mensaje' => 'Roles actualizados']);
+    }
 }

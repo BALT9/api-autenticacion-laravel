@@ -12,7 +12,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return response()->json(Role::get());
+        $roles = Role::with(["permisos"])->get();
+        return response()->json($roles);
     }
 
     /**
@@ -64,5 +65,14 @@ class RoleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function funActualizarPermisos($id, Request $request){
+        $role = Role::find($id);
+
+        // estoy usando el metodo permisos() del modelo Role 
+        $role->permisos()->sync($request["permisos_id"]);
+
+        return response()->json(["message" => "Permisos actualizados correctamente.."]);
     }
 }

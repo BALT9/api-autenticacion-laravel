@@ -49,6 +49,12 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    // asignar rol a usuario 
+    Route::post("/users/{id}/roles", [UsuarioController::class, "funActualizarRoles"]);
+
+    // signar permiso a rol 
+    Route::post("/role/{id}/permisos", [RoleController::class, "funActualizarPermisos"]);
+
     // crud usuario 
     Route::get("/users", [UsuarioController::class, "funListar"]);
     Route::post("/users", [UsuarioController::class, "funGuardar"]);
