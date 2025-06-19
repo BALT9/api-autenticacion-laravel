@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UsuarioController extends Controller
 {
     //
-    public function funListar()
+    public function funListar(Request $request)
     {
         // sql 
         // $users = DB::select("select * from users");
@@ -18,7 +18,14 @@ class UsuarioController extends Controller
         // $users = DB::table("users")->get();
 
         // $users = User::all();
-        $users = User::get();
+
+        $limit = isset($request->limit)?$request->limit:10;
+
+        $users = User::orderby('id','desc')
+                        ->where("email","like","%$request->buscar%")
+                        ->with("roles")
+                        ->paginate($limit);
+
         return response()->json($users, 200);
     }
 

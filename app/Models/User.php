@@ -56,6 +56,19 @@ class User extends Authenticatable
         return $this -> belongsToMany(Role::class)->withTimestamps();
     }
 
+    // asignar roles  
+    public function asignarRole($role){
+        if(is_string($role)){
+            $role = Role::where("nombre",$role)->firstOrFail();
+        }
+        $this->roles()->sync($role, false);
+    }
+
+    // obtener permisos por user
+    public function permisos(){
+        return $this->roles->map->permisos->flatten()->pluck("nombre")->unique(); 
+    }
+
     public function sucursales(){
         // un rol pertenece a muchos usuarios 
         return $this->belongsToMany(Sucursal::class)->withTimestamps();
