@@ -63,7 +63,12 @@ class UsuarioController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->save(); // ✅ Guarda los cambios
+        if(isset($request -> password)){
+            $user->password = $request->password;
+        }
+        $user->update();
+
+        // asignar roles 
 
         return response()->json(['mensaje' => 'Usuario actualizado', 'usuario' => $user], 200);
     }
