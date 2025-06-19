@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
+    protected $casts = [
+        'activo' => 'boolean',
+    ];
+
     public function almacenes(){
         return $this->belongsToMany(Almacen::class)
                         ->withTimestamps()
