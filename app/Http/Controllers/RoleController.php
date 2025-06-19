@@ -36,15 +36,26 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $role = Role::findOrFail($id);
 
+        return response()->json($role);
+    }
+ 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            "nombre" => "required"
+        ]);
+
+        $role = Role::findOrFail($id);
+        $role->nombre = $request->nombre;
+        $role->descripcion = $request->descripcion;
+        $role->update();
+        
+        return response()->json(["message" => "Rol actualizado correctamente.."]);
     }
 
     /**
