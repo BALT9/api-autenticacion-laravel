@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -12,6 +13,9 @@ class RoleController extends Controller
      */
     public function index()
     {
+        // permisos para el usuario 
+        Gate::authorize('listar-rol');
+
         $roles = Role::with(["permisos"])->get();
         return response()->json($roles);
     }
@@ -21,6 +25,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        // permisos para el usuario 
+        Gate::authorize('create-rol');
+
         $request->validate([
             "nombre" => "required"
         ]);
@@ -37,6 +44,9 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
+        // permisos para el usuario 
+        Gate::authorize('show-rol');
+
         $role = Role::findOrFail($id);
 
         return response()->json($role);
@@ -47,6 +57,9 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // permisos para el usuario 
+        Gate::authorize('update-rol');
+
         $request->validate([
             "nombre" => "required"
         ]);
@@ -68,6 +81,9 @@ class RoleController extends Controller
     }
 
     public function funActualizarPermisos($id, Request $request){
+        // permisos para el usuario 
+        Gate::authorize('update-rol');
+
         $role = Role::find($id);
 
         // estoy usando el metodo permisos() del modelo Role 
