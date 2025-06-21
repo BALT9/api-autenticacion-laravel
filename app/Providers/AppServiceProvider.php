@@ -19,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
+    {   
+        // funciona para los permisos 
         Gate::before(function ($user, $permiso){
             if($user->permisos()->contains('manage_all')){
                 return true;

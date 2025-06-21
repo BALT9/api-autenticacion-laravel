@@ -16,19 +16,35 @@ class ProductoController extends Controller
         // $limit = $request->limit;
         $limit = isset($request->limit) ? $request->limit : 10;
 
-        $activo =isset($request->activo) ? $request->activo: null;
+        $activo = isset($request->activo) ? $request->activo : null;
+
+        $almacenID = isset($request->almacen) ? $request->almacen : '';
+
+        $productos = Producto::query();
+
+        if(isset($activo)){
+            $productos = $productos->where('activo', "=", $request->activo);
+        }
 
         if (isset($request->search)) {
             $search = $request->search;
-            $productos = Producto::where('activo',"=", $request->activo)
+            $productos = $productos->where('activo', "=", $request->activo)
                 ->where("nombre", "LIKE", "%$search%")
                 ->orwhere('marca', "LIKE", "%$search%");
-        } else {
-            $productos = Producto::where('activo',"=", $request->activo)->orderby('id', 'desc');
         }
 
+        if (isset($almacenID)) {
+            $productos = $productos->whereHas('almacens', function ($query) use ($almacenID) {
+                    $query->where('almacens.id', "=", $almacenID);
+                });
+                
+        }
+
+        // muestra los productos segun el almacen 
+
         $productos = $productos->with(['categoria'])
-            ->paginate($limit);
+                    ->orderBy('id','desc')
+                    ->paginate($limit);
 
         return response()->json($productos);
     }
@@ -105,7 +121,6 @@ class ProductoController extends Controller
             $prod->save();
 
             return response()->json(["message" => "Producto registrado"], 201);
-
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json(["message" => "Error al realizar la consulta"]);
@@ -166,8 +181,8 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         $prod = Producto::findOrFail($id);
-        $prod -> activo = false;
-        $prod -> update();
+        $prod->activo = false;
+        $prod->update();
         return response()->json(["message" => "Producto Eliminado"], 201);
     }
 }

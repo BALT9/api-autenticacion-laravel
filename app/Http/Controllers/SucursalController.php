@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sucursal;
 use Illuminate\Http\Request;
 
 class SucursalController extends Controller
@@ -11,7 +12,8 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        //
+        $sucursales = Sucursal::get();
+        return response()->json($sucursales, 200);
     }
 
     /**
@@ -19,7 +21,21 @@ class SucursalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nombre" => "required",
+            "direccion" => "required",
+            "telefono" => "required"
+        ]);
+
+        $sucursal = new Sucursal();
+        $sucursal->nombre = $request->nombre;
+        $sucursal->direccion = $request->direccion;
+        $sucursal->telefono = $request->telefono;
+        $sucursal->ciudad = $request->ciudad;
+
+        $sucursal->save();
+
+        return response()->json(["message"=>"Sucursal creada exitosamente", "sucursal"=>$sucursal], 201);
     }
 
     /**
@@ -27,7 +43,8 @@ class SucursalController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $sucursal = Sucursal::findOrFail($id);
+        return response()->json($sucursal, 201);
     }
 
     /**
@@ -35,7 +52,22 @@ class SucursalController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            "nombre" => "required",
+            "direccion" => "required",
+            "telefono" => "required"
+        ]);
+        
+        $sucursal = Sucursal::findOrFail($id);
+        
+        $sucursal->nombre = $request->nombre;
+        $sucursal->direccion = $request->direccion;
+        $sucursal->telefono = $request->telefono;
+        $sucursal->ciudad = $request->ciudad;
+
+        $sucursal->update();
+
+        return response()->json(["message"=>"Sucursal actualizado", "sucursal"=>$sucursal], 201);
     }
 
     /**
