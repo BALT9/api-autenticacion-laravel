@@ -1,0 +1,42 @@
+GET http://127.0.0.1:8000/api/entidad-comercial
+Accept: application/json
+Authorization: Bearer 3|gWyGarBBQ6MPK7PRvMAFxnVmQm39IalpAiMmINaZ0a707c80
+
+### Cliente
+POST http://127.0.0.1:8000/api/entidad-comercial
+Accept: application/json
+Authorization: Bearer 3|gWyGarBBQ6MPK7PRvMAFxnVmQm39IalpAiMmINaZ0a707c80
+Content-Type: application/json
+
+{
+  "tipo": "cliente",
+  "razon_social":"javier",
+  "ci_nit_ruc_rut":"3213123",
+  "telefono":"",
+  "direccion":"",
+  "correo":"",
+  "nombre_completo":"javier tarqui",
+  "rol_contacto":"",
+  "telefono_secundario":"",
+  "correo_secundario":""
+}
+
+### proveedor
+POST http://127.0.0.1:8000/api/entidad-comercial
+Accept: application/json
+Authorization: Bearer 3|gWyGarBBQ6MPK7PRvMAFxnVmQm39IalpAiMmINaZ0a707c80
+Content-Type: application/json 
+
+{
+  "tipo": "proveedor",
+  "razon_social":"Empresa 1",
+  "ci_nit_ruc_rut":"3423423",
+  "telefono":"76543212",
+  "direccion":"av 123 lopez",
+  "correo":"empre@gmail.com"
+}
+
+### buscar por id
+GET  http://127.0.0.1:8000/api/entidad-comercial/2
+Accept: application/json
+Authorization: Bearer 3|gWyGarBBQ6MPK7PRvMAFxnVmQm39IalpAiMmINaZ0a707c80
